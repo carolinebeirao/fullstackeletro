@@ -1,20 +1,41 @@
+<?php
+$servidor = "localhost";
+$username = "root";
+$password = "";
+$database = "fseletro";
+
+// Criando a conexão
+$conn = mysqli_connect($servidor, $username, $password, $database);
+
+//Verificando a conexão
+if (!$conn){
+  die("A conexão ao BD falhou:" . mysqli_connect_error());
+}
+
+
+if(isset($_POST['nome']) && isset($_POST['msg'])){
+$nome = $_POST['nome'];
+$msg = $_POST['msg'];
+
+$sql = "insert into comentarios(nome, msg) values ('$nome','$msg')";
+$result = $conn->query($sql);
+
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato</title>
-    <link rel="stylesheet" href="./CSS/estilo.css">
-    <script src="js/index.js"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contato</title>
+        <link rel="stylesheet" href="./CSS/estilo.css">
+        <script src="js/index.js"></script>
+    </head>
+<   body>
 
-    <nav class="menu">
-        <a href="index.php"><img width="70px" src="./imagens/LOGO.png" alt="full stack eletro"></a>
-        <a href="produtos.php">Produtos</a>
-        <a href="loja.php">Nossas Lojas</a>
-        <a href="contato.php">Contato</a>
-    </nav>
+        <?php
+            include('menu.html');
+        ?>
 
     <header>
         <h2>Fale Conosco</h2><hr>
@@ -36,7 +57,23 @@
             <textarea style="height: 200px; width: 400px;"></textarea>                      
         </form>
    </div>
+    
+   <?php
 
+$sql = "select * from comentarios";
+$result = $conn->query($sql);
+
+if($result->num_rows > 0){
+while($rows = $result->fetch_assoc()){
+    echo"Data: ",$rows['data'], "</br>";
+    echo"Nome: ",$rows['nome'], "</br>";
+    echo"Mensagem: ",$rows['msg'], "</br>";
+    echo"<hr>";
+   }
+} else {
+    echo"Nenhum comentário ainda!";
+ }
+ ?>
     <footer id="rodapé">
         <p>&copy; Recode Pro</p>
     </footer>

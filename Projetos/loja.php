@@ -9,12 +9,9 @@
 </head>
 <body>
 
-    <nav class="menu">
-        <a href="index.php"><img width="70px" src="./imagens/LOGO.png" alt="full stack eletro"></a>
-        <a href="produtos.php">Produtos</a>
-        <a href="loja.php">Nossas Lojas</a>
-        <a href="contato.php">Contato</a>
-    </nav>
+<?php
+    include('menu.html');
+?>
 
     <header>
         <h2>Nossas Lojas</h2><hr>
